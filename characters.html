@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bracer Guild — Choose Your Character</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: #1a1208;
+    min-height: 100vh;
+    padding: 40px 16px;
+    font-family: 'Crimson Text', serif;
+  }
+
+  .header { text-align:center; margin-bottom:32px; }
+  .emblem { width:200px; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.8)); margin-bottom:8px; }
+
+  h1 {
+    font-family:'Cinzel',serif;
+    font-size:24px;
+    font-weight:700;
+    color:#d4a017;
+    letter-spacing:4px;
+    text-shadow:0 2px 8px rgba(0,0,0,0.8);
+    margin-bottom:6px;
+  }
+
+  .subtitle {
+    font-family:'Cinzel',serif;
+    font-size:11px;
+    color:rgba(212,160,23,0.6);
+    letter-spacing:2px;
+  }
+
+  .grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap:16px;
+    max-width:900px;
+    margin:0 auto;
+  }
+
+  .char-card {
+    background:rgba(20,12,4,0.8);
+    border:1px solid rgba(184,134,11,0.3);
+    border-radius:4px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:border-color 0.2s, transform 0.1s;
+    position:relative;
+  }
+
+  .char-card:hover {
+    border-color:rgba(184,134,11,0.8);
+    transform:translateY(-2px);
+  }
+
+  .char-card:active { transform:scale(0.97); }
+
+  .char-card img {
+    width:100%;
+    height:160px;
+    object-fit:contain;
+    object-position:center bottom;
+    background:#0e0a04;
+    display:block;
+  }
+
+  .char-name {
+    font-family:'Cinzel',serif;
+    font-size:10px;
+    font-weight:700;
+    color:#d4a017;
+    text-align:center;
+    padding:6px 4px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+  }
+
+  .copied-toast {
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:rgba(44,26,14,0.95);
+    border:1px solid #b8860b;
+    color:#d4a017;
+    font-family:'Cinzel',serif;
+    font-size:13px;
+    padding:10px 24px;
+    border-radius:4px;
+    opacity:0;
+    transition:opacity 0.3s, transform 0.3s;
+    pointer-events:none;
+    letter-spacing:1px;
+    z-index:100;
+  }
+
+  .copied-toast.show {
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+
+  .ranks-link {
+    display:block;
+    text-align:center;
+    margin:0 auto 28px;
+    max-width:900px;
+    font-family:'Cinzel',serif;
+    font-size:12px;
+    color:#b8860b;
+    text-decoration:none;
+    letter-spacing:2px;
+    border:1px solid rgba(184,134,11,0.3);
+    padding:9px;
+    border-radius:3px;
+    background:rgba(184,134,11,0.05);
+  }
+  .ranks-link:hover { background:rgba(184,134,11,0.12); }
+
+  footer {
+    text-align:center;
+    font-family:'Cinzel',serif;
+    font-size:10px;
+    color:rgba(184,134,11,0.3);
+    letter-spacing:2px;
+    margin-top:32px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <img class="emblem" src="https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Bracer%20Emblem.png" alt="Bracer Guild"/>
+  <h1>CHOOSE YOUR CHARACTER</h1>
+  <p class="subtitle">Click a portrait to copy the !set command</p>
+</div>
+
+<a class="ranks-link" href="ranks.html">← View Bracer Ranks & BP info</a>
+
+<div class="grid" id="grid"></div>
+
+<div class="copied-toast" id="toast"></div>
+
+<footer style="margin-top:32px;">BRACER GUILD — TRAILS IN THE SKY</footer>
+
+<script>
+var characters = [
+  { name:"Estelle",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Estelle/C_KA1017.png",     flip:true  },
+  { name:"Joshua",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Joshua/C_KA1031.png",      flip:true  },
+  { name:"Agate",      url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Agate/C_KA1280.png",       flip:true  },
+  { name:"Scherazade", url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Shera/C_KAO020.png",       flip:true  },
+  { name:"Tita",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Tita/C_KAO060.png",        flip:true  },
+  { name:"Olivier",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Olivier/C_KAO030.png",     flip:true  },
+  { name:"Dorothy",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Dorothy/C_KAO150.png",     flip:true  },
+  { name:"Kloe",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Kloe/C_KA1160.png",        flip:true  },
+  { name:"Anelace",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Anelace/C_KA1310.png",     flip:true  },
+  { name:"Niel",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Niel/C_KAO140.png",        flip:true  },
+  { name:"Alba",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Alba/C_KAO130.png",        flip:true  },
+  { name:"Walter",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Walter/C_KAO250.png",      flip:true  },
+  { name:"Kevin",      url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Kevin/C_KA1060.png",       flip:true  },
+  { name:"Casius",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Cassius/C_KAO080.png",     flip:true  },
+  { name:"Don",        url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Don/C_KAO190.png",         flip:false },
+  { name:"Josette",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Josette/C_KAO210.png",     flip:false },
+  { name:"Jill",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Jill/C_KAO640.png",        flip:true  },
+  { name:"Richard",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Richard/C_KAO110.png",     flip:true  },
+  { name:"Kanone",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Kanone/C_KA1320.png",      flip:true  },
+  { name:"Grant",      url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Grant/C_KAO820.png",       flip:true  },
+  { name:"Kurt",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Gus/C_KAO840.png",         flip:true  },
+  { name:"Carna",      url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Cana/C_KAO830.png",        flip:true  },
+  { name:"Shwarz",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Schwarz/C_KAO170.png",     flip:true  },
+  { name:"Zin",        url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Zin/C_KAO070.png",         flip:true  },
+];
+
+var grid = document.getElementById('grid');
+var toast = document.getElementById('toast');
+var toastTimer;
+
+characters.forEach(function(c) {
+  var card = document.createElement('div');
+  card.className = 'char-card';
+
+  var img = document.createElement('img');
+  img.src = c.url;
+  img.alt = c.name;
+  if (c.flip) img.style.transform = 'scaleX(-1)';
+
+  var name = document.createElement('div');
+  name.className = 'char-name';
+  name.textContent = c.name;
+
+  card.appendChild(img);
+  card.appendChild(name);
+
+  card.addEventListener('click', function() {
+    var cmd = '!set ' + c.name;
+    navigator.clipboard.writeText(cmd).then(function() {
+      clearTimeout(toastTimer);
+      toast.textContent = 'Copied: ' + cmd;
+      toast.classList.add('show');
+      toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2500);
+    });
+  });
+
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>
