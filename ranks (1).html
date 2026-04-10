@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bracer Guild — Ranks</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: #1a1208;
+    background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 40px),
+                      repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 40px);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px;
+    font-family: 'Crimson Text', serif;
+  }
+
+  .page { max-width: 600px; width: 100%; }
+
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .emblem {
+    width: 220px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.8));
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #d4a017;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
+
+  .card {
+    background: url('https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Bracer%20paper.png') no-repeat center/100% 100%;
+    padding: 16px 36px 48px 52px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .card-top-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #8b1a1a;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(139,26,26,0.4);
+    margin-bottom: 8px;
+    padding-left: 52px;
+    margin-left: -52px;
+    margin-right: -36px;
+    padding-right: 36px;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #8b1a1a;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(139,26,26,0.4);
+  }
+
+  .earn-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 15px;
+    color: #3a1f0e;
+  }
+
+  .earn-amt {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #b8860b;
+  }
+
+  .note {
+    text-align: center;
+    font-style: italic;
+    font-size: 13px;
+    color: #6b4226;
+    margin-top: 6px;
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(44,26,14,0.2);
+    margin: 14px 0;
+  }
+
+  .rank-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  .rank-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .badge {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 16px;
+    border-radius: 3px;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    min-width: 160px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .badge-desc {
+    font-size: 13px;
+    color: #4a2e1a;
+    font-style: italic;
+  }
+
+  .badge-bp {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: #6b4226;
+    margin-left: auto;
+  }
+
+  .Jr  { background:#b8860b; }
+  .Sr  { background:#7f8c8d; }
+  .G   { background:#bdc3c7; color:#555 !important; }
+  .Gp  { background:#bdc3c7; color:#555 !important; }
+  .F   { background:#95a5a6; }
+  .Fp  { background:#95a5a6; }
+  .E   { background:#7f8c8d; }
+  .Ep  { background:#7f8c8d; }
+  .D   { background:#f39c12; }
+  .Dp  { background:#f39c12; }
+  .C   { background:#27ae60; }
+  .Cp  { background:#27ae60; }
+  .B   { background:#2980b9; }
+  .Bp  { background:#2980b9; }
+  .A   { background:#8e44ad; }
+  .Ap  { background:#8e44ad; }
+  .S   { background:#c0392b; }
+
+  .char-link {
+    display: block;
+    text-align: center;
+    margin: 0 auto 24px;
+    max-width: 260px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: #d4a017;
+    text-decoration: none;
+    letter-spacing: 2px;
+    border: 1px solid rgba(184,134,11,0.7);
+    padding: 10px 16px;
+    border-radius: 3px;
+    background: rgba(184,134,11,0.12);
+    transition: background 0.2s;
+  }
+  .char-link:hover { background: rgba(184,134,11,0.25); }
+
+  footer {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: rgba(184,134,11,0.4);
+    letter-spacing: 2px;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <img class="emblem" src="https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Bracer%20Emblem.png" alt="Bracer Guild"/>
+    <h1>BRACER RANKS</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-top-title">How to Earn BP</div>
+    <div class="earn-row"><span>⏱ Watching the stream</span><span class="earn-amt">1 BP / min</span></div>
+    <div class="earn-row"><span>💬 Chatting</span><span class="earn-amt">1 BP / msg</span></div>
+    <div class="earn-row"><span>💎 Cheering bits</span><span class="earn-amt">1 BP / bit</span></div>
+    <div class="earn-row"><span>⭐ Subscribing</span><span class="earn-amt">200 BP</span></div>
+    <div class="note">Subscribers earn 2× BP on everything</div>
+
+    <div class="divider"></div>
+
+    <div class="section-title">Rank Progression</div>
+    <div class="rank-item" style="margin-bottom:6px; justify-content:center;">
+      <span class="badge Jr">Junior — All chatters start here</span>
+    </div>
+    <div class="rank-item" style="margin-bottom:10px; justify-content:center;">
+      <span class="badge Sr">Senior — Watch 10 mins on 5 streams</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="rank-grid">
+      <div class="rank-item"><span class="badge G">G — 500 BP</span></div>
+      <div class="rank-item"><span class="badge Gp">G+ — 1,200 BP</span></div>
+      <div class="rank-item"><span class="badge F">F — 2,500 BP</span></div>
+      <div class="rank-item"><span class="badge Fp">F+ — 4,500 BP</span></div>
+      <div class="rank-item"><span class="badge E">E — 7,000 BP</span></div>
+      <div class="rank-item"><span class="badge Ep">E+ — 10,500 BP</span></div>
+      <div class="rank-item"><span class="badge D">D — 15,000 BP</span></div>
+      <div class="rank-item"><span class="badge Dp">D+ — 21,000 BP</span></div>
+      <div class="rank-item"><span class="badge C">C — 29,000 BP</span></div>
+      <div class="rank-item"><span class="badge Cp">C+ — 39,000 BP</span></div>
+      <div class="rank-item"><span class="badge B">B — 52,000 BP</span></div>
+      <div class="rank-item"><span class="badge Bp">B+ — 68,000 BP</span></div>
+      <div class="rank-item"><span class="badge A">A — 88,000 BP</span></div>
+      <div class="rank-item"><span class="badge Ap">A+ — 115,000 BP</span></div>
+      <div class="rank-item"><span class="badge S">S — 200,000 BP</span></div>
+    </div>
+  </div>
+
+  <a class="char-link" href="characters.html">→ Choose your character portrait</a>
+
+  <footer>BRACER GUILD — TRAILS IN THE SKY</footer>
+</div>
+</body>
+</html>
