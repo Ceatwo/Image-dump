@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bracer Guild — Choose Your Character</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: #1a1208;
+    min-height: 100vh;
+    padding: 40px 16px;
+    font-family: 'Crimson Text', serif;
+  }
+
+  .page { max-width: 960px; margin: 0 auto; }
+
+  .header { text-align:center; margin-bottom:32px; }
+  .emblem { width:200px; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.8)); margin-bottom:8px; }
+
+  h1 {
+    font-family:'Cinzel',serif;
+    font-size:24px;
+    font-weight:700;
+    color:#d4a017;
+    letter-spacing:4px;
+    text-shadow:0 2px 8px rgba(0,0,0,0.8);
+    margin-bottom:6px;
+  }
+
+  .subtitle {
+    font-family:'Cinzel',serif;
+    font-size:11px;
+    color:rgba(212,160,23,0.6);
+    letter-spacing:2px;
+  }
+
+  .ranks-link {
+    display:block;
+    text-align:center;
+    margin:0 auto 32px;
+    max-width:280px;
+    font-family:'Cinzel',serif;
+    font-size:12px;
+    color:#b8860b;
+    text-decoration:none;
+    letter-spacing:2px;
+    border:1px solid rgba(184,134,11,0.3);
+    padding:9px;
+    border-radius:3px;
+    background:rgba(184,134,11,0.05);
+  }
+  .ranks-link:hover { background:rgba(184,134,11,0.12); }
+
+  .section-header {
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(184,134,11,0.3);
+  }
+
+  .section-header h2 {
+    font-family:'Cinzel',serif;
+    font-size:15px;
+    font-weight:700;
+    color:#d4a017;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+
+  .section-header p {
+    font-size:14px;
+    color:rgba(212,160,23,0.65);
+    font-style:italic;
+  }
+
+  .section-header .sub-note {
+    display:inline-block;
+    margin-top:6px;
+    font-family:'Cinzel',serif;
+    font-size:10px;
+    color:#b8860b;
+    background:rgba(184,134,11,0.1);
+    border:1px solid rgba(184,134,11,0.3);
+    padding:4px 10px;
+    border-radius:3px;
+    letter-spacing:1px;
+  }
+
+  .section { margin-bottom: 48px; }
+
+  .grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap:12px;
+  }
+
+  .char-card {
+    background:rgba(20,12,4,0.8);
+    border:1px solid rgba(184,134,11,0.25);
+    border-radius:4px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:border-color 0.2s, transform 0.15s;
+  }
+
+  .char-card:hover {
+    border-color:rgba(184,134,11,0.8);
+    transform:translateY(-3px);
+  }
+
+  .char-card:active { transform:scale(0.97); }
+
+  .char-card img {
+    width:100%;
+    height:140px;
+    object-fit:contain;
+    object-position:center bottom;
+    background:#0e0a04;
+    display:block;
+  }
+
+  .char-name {
+    font-family:'Cinzel',serif;
+    font-size:9px;
+    font-weight:700;
+    color:#d4a017;
+    text-align:center;
+    padding:5px 4px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    line-height:1.3;
+  }
+
+  /* Expression cards get a subtle gold top border */
+  .expr-card {
+    border-color:rgba(184,134,11,0.4);
+  }
+  .expr-card .char-name {
+    background:rgba(184,134,11,0.08);
+  }
+
+  .copied-toast {
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:rgba(44,26,14,0.97);
+    border:1px solid #b8860b;
+    color:#d4a017;
+    font-family:'Cinzel',serif;
+    font-size:13px;
+    padding:10px 24px;
+    border-radius:4px;
+    opacity:0;
+    transition:opacity 0.3s, transform 0.3s;
+    pointer-events:none;
+    letter-spacing:1px;
+    z-index:100;
+  }
+
+  .copied-toast.show {
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+
+  footer {
+    text-align:center;
+    font-family:'Cinzel',serif;
+    font-size:10px;
+    color:rgba(184,134,11,0.3);
+    letter-spacing:2px;
+    margin-top:16px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <img class="emblem" src="https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Bracer%20Emblem.png" alt="Bracer Guild"/>
+    <h1>CHOOSE YOUR CHARACTER</h1>
+    <p class="subtitle">Click any portrait to copy the !set command</p>
+  </div>
+
+  <a class="ranks-link" href="ranks.html">← Bracer Ranks & BP info</a>
+
+  <!-- SECTION 1: ALL CHATTERS -->
+  <div class="section">
+    <div class="section-header">
+      <h2>All Chatters</h2>
+      <p>These portraits are available to everyone. Use <strong>!set [name]</strong> in chat.</p>
+    </div>
+    <div class="grid" id="pool-grid"></div>
+  </div>
+
+  <!-- SECTION 2: EXPRESSION CHARACTERS -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Expression Characters</h2>
+      <p>These characters react to your messages with different emotions — happy, sad, angry, shocked and more.</p>
+      <span class="sub-note">⭐ Subscribers get the full emotion set &nbsp;|&nbsp; Non-subs get the default portrait</span>
+    </div>
+    <div class="grid" id="expr-grid"></div>
+  </div>
+
+  <footer>BRACER GUILD — TRAILS IN THE SKY</footer>
+</div>
+
+<div class="copied-toast" id="toast"></div>
+
+<script>
+var poolCharacters = [
+  { name:"Estelle",            url:"https://i.postimg.cc/jDmvV7Y1/c-kao000.png",        flip:true  },
+  { name:"Joshua",             url:"https://i.postimg.cc/FY8GtLXq/c-kao010.png",        flip:true  },
+  { name:"Olivier",            url:"https://i.postimg.cc/JsvKwkCS/c-kao030.png",        flip:true  },
+  { name:"Scherazade",         url:"https://i.postimg.cc/CRXJyqpW/c-kao020.png",        flip:true  },
+  { name:"Kloe",               url:"https://i.postimg.cc/9DK137H6/c-kao040.png",        flip:true  },
+  { name:"Agate",              url:"https://i.postimg.cc/182MxqZx/c-kao051.png",        flip:true  },
+  { name:"Tita",               url:"https://i.postimg.cc/3kV9MvHH/c-kao060.png",        flip:true  },
+  { name:"Zin",                url:"https://i.postimg.cc/XrmxMC0S/c-kao070.png",        flip:true  },
+  { name:"Cassius",            url:"https://i.postimg.cc/68gzsvNx/c-kao080.png",        flip:false },
+  { name:"Alicia",             url:"https://i.postimg.cc/06Sn9y94/c-kao090.png",        flip:true  },
+  { name:"Russle",             url:"https://i.postimg.cc/xkm59194/c-kao100.png",        flip:true  },
+  { name:"Richard",            url:"https://i.postimg.cc/sBWm3g38/c-kao110.png",        flip:true  },
+  { name:"Lawrance",           url:"https://i.postimg.cc/4KcPXxXr/c-kao120.png",        flip:true  },
+  { name:"Nice Alba",          url:"https://i.postimg.cc/Z9NHJ5JG/c-kao130.png",        flip:true  },
+  { name:"Magician",           url:"https://i.postimg.cc/DWG67w23/c-kao134.png",        flip:false },
+  { name:"Niel",               url:"https://i.postimg.cc/949bcQW3/c-kao141.png",        flip:true  },
+  { name:"Dorothy",            url:"https://i.postimg.cc/WDZ8s12P/c-kao150.png",        flip:false },
+  { name:"Dorothy Smile",      url:"https://i.postimg.cc/rd4jqw8T/c-kao151.png",        flip:false },
+  { name:"Morgan",             url:"https://i.postimg.cc/JyXxRz1m/c-kao160.png",        flip:true  },
+  { name:"Schwarz",            url:"https://i.postimg.cc/4KcPXxJJ/c-kao170.png",        flip:false },
+  { name:"Kallen",             url:"https://i.postimg.cc/Z9NHJ5TY/c-kao182.png",        flip:true  },
+  { name:"Don",                url:"https://i.postimg.cc/jWfcRSsd/c-kao190.png",        flip:false },
+  { name:"Don Laugh",          url:"https://i.postimg.cc/CZ87wxFx/c-kao191.png",        flip:false },
+  { name:"Kyle",               url:"https://i.postimg.cc/rd4jqw8s/c-kao200.png",        flip:true  },
+  { name:"Josette",            url:"https://i.postimg.cc/wtN29j67/c-kao210.png",        flip:false },
+  { name:"Josette Laugh",      url:"https://i.postimg.cc/B8FpJnqj/c-kao211.png",        flip:false },
+  { name:"Dunan",              url:"https://i.postimg.cc/d7C6JVq7/c-kao220.png",        flip:false },
+  { name:"Mueller",            url:"https://i.postimg.cc/phtZrMT2/c-kao270.png",        flip:false },
+  { name:"LT Lawrance",        url:"https://i.postimg.cc/jwrX2Y5x/c-kao280.png",        flip:true  },
+  { name:"Lt Lawrance no hat", url:"https://i.postimg.cc/jwrX2Y5q/c-kao283.png",        flip:true  },
+  { name:"Young Estelle",      url:"https://i.postimg.cc/34HBNQRJ/c-kao290.png",        flip:false },
+  { name:"Young Joshua",       url:"https://i.postimg.cc/hzqrvRjG/c-kao300.png",        flip:true  },
+  { name:"Sieg",               url:"https://i.postimg.cc/k6dcGP44/c-kao310.png",        flip:true  },
+  { name:"Maid Estelle",       url:"https://i.postimg.cc/G81Qtn2t/c-kao320.png",        flip:true  },
+  { name:"Maid Joshua",        url:"https://i.postimg.cc/zb1jvYB3/c-kao330.png",        flip:true  },
+  { name:"Red Knight",         url:"https://i.postimg.cc/r0LJs2mK/c-kao341.png",        flip:true  },
+  { name:"Azur Knight",        url:"https://i.postimg.cc/TLX91vwK/c-kao350.png",        flip:true  },
+  { name:"Princess Joshua",    url:"https://i.postimg.cc/xJSR8VCk/c-kao360.png",        flip:true  },
+  { name:"Princess Kloe",      url:"https://i.postimg.cc/Ppk4Jnxp/c-kao408.png",        flip:true  },
+  { name:"School Josette",     url:"https://i.postimg.cc/N9w4FvM2/c-kao410.png",        flip:true  },
+  { name:"Mayor Maybelle",     url:"https://i.postimg.cc/KkyNjhzg/c-kao610.png",        flip:true  },
+  { name:"Lila",               url:"https://i.postimg.cc/47T5yRd9/c-kao620.png",        flip:true  },
+  { name:"Lugran",             url:"https://i.postimg.cc/zb1jvYBC/c-kao630.png",        flip:true  },
+  { name:"Jill",               url:"https://i.postimg.cc/47T5yRdQ/c-kao640.png",        flip:true  },
+  { name:"Jean",               url:"https://i.postimg.cc/gXPDjbJq/c-kao650.png",        flip:true  },
+  { name:"Dalmore",            url:"https://i.postimg.cc/2bfwyN6w/c-kao660.png",        flip:true  },
+  { name:"Gilbert",            url:"https://i.postimg.cc/k6dcGP4y/c-kao670.png",        flip:true  },
+  { name:"Mao",                url:"https://i.postimg.cc/8JVHcg54/c-kao680.png",        flip:true  },
+  { name:"Gustav",             url:"https://i.postimg.cc/qhdLqHRQ/c-kao691.png",        flip:true  },
+  { name:"Cid",                url:"https://i.postimg.cc/r0LJs2mQ/c-kao700.png",        flip:true  },
+  { name:"Head Maid",          url:"https://i.postimg.cc/phtZrMTG/c-kao710.png",        flip:true  },
+  { name:"Phillip",            url:"https://i.postimg.cc/DJdcbpJ1/c-kao720.png",        flip:true  },
+  { name:"Hans",               url:"https://i.postimg.cc/62LhGb2d/c-kao730.png",        flip:true  },
+  { name:"Aina",               url:"https://i.postimg.cc/wycks4yX/c-kao740.png",        flip:true  },
+  { name:"Matron Theresa",     url:"https://i.postimg.cc/gXqK6tXy/c-kao750.png",        flip:true  },
+  { name:"Elnan",              url:"https://i.postimg.cc/7GMNTtGn/c-kao760.png",        flip:true  },
+  { name:"Clem",               url:"https://i.postimg.cc/hzb07Zzb/c-kao770.png",        flip:true  },
+  { name:"Collins",            url:"https://i.postimg.cc/G8Jjsg8j/c-kao780.png",        flip:true  },
+  { name:"Kilika",             url:"https://i.postimg.cc/47b1h275/c-kao790.png",        flip:true  },
+  { name:"Murdock",            url:"https://i.postimg.cc/xJyPbpJg/c-kao800.png",        flip:true  },
+  { name:"Anelace",            url:"https://i.postimg.cc/S27Gz12d/c-kao810.png",        flip:true  },
+  { name:"Grant",              url:"https://i.postimg.cc/qhXGCDhj/c-kao820.png",        flip:true  },
+  { name:"Canon",              url:"https://i.postimg.cc/34CZDf4t/c-kao830.png",        flip:true  },
+  { name:"Kurt",               url:"https://i.postimg.cc/VrBFbZr7/c-kao841.png",        flip:true  },
+];
+
+var exprCharacters = [
+  { name:"Estelle",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Estelle/C_KA1017.png",   flip:true  },
+  { name:"Joshua",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Joshua/C_KA1031.png",    flip:true  },
+  { name:"Agate",      url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Agate/C_KA1280.png",     flip:true  },
+  { name:"Scherazade", url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Shera/C_KAO020.png",     flip:true  },
+  { name:"Tita",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Tita/C_KAO060.png",      flip:true  },
+  { name:"Olivier",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Olivier/C_KAO030.png",   flip:true  },
+  { name:"Dorothy",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Dorothy/C_KAO150.png",   flip:true  },
+  { name:"Kloe",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Kloe/C_KA1160.png",      flip:true  },
+  { name:"Anelace",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Anelace/C_KA1310.png",   flip:true  },
+  { name:"Niel",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Niel/C_KAO140.png",      flip:true  },
+  { name:"Alba",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Alba/C_KAO130.png",      flip:true  },
+  { name:"Walter",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Walter/C_KAO250.png",    flip:true  },
+  { name:"Kevin",      url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Kevin/C_KA1060.png",     flip:true  },
+  { name:"Casius",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Cassius/C_KAO080.png",   flip:true  },
+  { name:"Don",        url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Don/C_KAO190.png",       flip:false },
+  { name:"Josette",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Josette/C_KAO210.png",   flip:false },
+  { name:"Jill",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Jill/C_KAO640.png",      flip:true  },
+  { name:"Richard",    url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Richard/C_KAO110.png",   flip:true  },
+  { name:"Kanone",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Kanone/C_KA1320.png",    flip:true  },
+  { name:"Grant",      url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Grant/C_KAO820.png",     flip:true  },
+  { name:"Kurt",       url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Gus/C_KAO840.png",       flip:true  },
+  { name:"Carna",      url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Cana/C_KAO830.png",      flip:true  },
+  { name:"Shwarz",     url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Schwarz/C_KAO170.png",   flip:true  },
+  { name:"Zin",        url:"https://raw.githubusercontent.com/Ceatwo/Image-dump/main/Zin/C_KAO070.png",       flip:true  },
+];
+
+var toast = document.getElementById('toast');
+var toastTimer;
+
+function copyCmd(name) {
+  var cmd = '!set ' + name;
+  navigator.clipboard.writeText(cmd).then(function() {
+    clearTimeout(toastTimer);
+    toast.textContent = 'Copied: ' + cmd;
+    toast.classList.add('show');
+    toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 2500);
+  });
+}
+
+function buildGrid(chars, gridId, extraClass) {
+  var grid = document.getElementById(gridId);
+  chars.forEach(function(c) {
+    var card = document.createElement('div');
+    card.className = 'char-card' + (extraClass ? ' ' + extraClass : '');
+
+    var img = document.createElement('img');
+    img.src = c.url;
+    img.alt = c.name;
+    img.loading = 'lazy';
+    if (c.flip) img.style.transform = 'scaleX(-1)';
+
+    var name = document.createElement('div');
+    name.className = 'char-name';
+    name.textContent = c.name;
+
+    card.appendChild(img);
+    card.appendChild(name);
+    card.addEventListener('click', function() { copyCmd(c.name); });
+    grid.appendChild(card);
+  });
+}
+
+buildGrid(poolCharacters, 'pool-grid', '');
+buildGrid(exprCharacters, 'expr-grid', 'expr-card');
+</script>
+</body>
+</html>
